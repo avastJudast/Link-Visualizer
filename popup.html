@@ -3,10 +3,22 @@
   <head>
     <link rel="stylesheet" href="button.css">
     <!--<p>head for button</p>-->
+    <style>
+      div {
+        height: 100px;
+        width: 100px;
+        background-color: powderblue;
+      }
+      </style>
   </head>
-  <body>
-    <p>Press button to scrape page!</p>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
+  <body>  
+      <div>
+      <p id="stinko">Press button to scrape page!</p>
+      <button id="scrape">click me</button>
+      <script src="popup.js"></script>
+      </div>
+      <div>
+      <p id="links"></p>
+      </div>
   </body>
 </html>
