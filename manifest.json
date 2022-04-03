@@ -1,13 +1,17 @@
 {
-    "name": "Getting Started Example",
-    "description": "Build an Extension!",
+    "name": "Link Visualizer",
+    "description": "Visualizes links on this page!",
     "version": "1.0",
     "manifest_version": 3,
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["storage"],
+    "icons": { "16": "icon16.png",
+        "48": "icon48.png",
+       "128": "icon128.png" },
+    "permissions": ["storage", "activeTab", "scripting"],
     "action": {
         "default_popup": "popup.html"
     }
+    
   }

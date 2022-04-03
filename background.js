@@ -1,4 +1,5 @@
 let color = '#3aa757';
+let curURL = window.location.href;
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({ color });
