@@ -21,8 +21,7 @@ scrape.addEventListener("click", async () => {
 function getURLs() {
   var urls = [];
   for(var i = 0; i < document.links.length; i ++) {
-      if(document.links[i].hostname === location.hostname)
-          urls.push(document.links[i].href);
+    urls.push(document.links[i].href);
   }
   return urls;
 }
