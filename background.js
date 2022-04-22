@@ -1,10 +1,31 @@
-let color = '#3aa757';
-let curURL = window.location.href;
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  //console.log(message);
+  if (message.popupOpen) {
+    //console.log("got milk?");
+    const promise = new Promise(async (resolve) => {
+      let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      resolve(tab);
+      //console.log("THis is url", tab.url);
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: getURLs,
+      }, function(result) {
+        console.log(result[0]);
+      });
+    });
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-  console.log('Default background color set to %cgreen', `color: ${color}`);
+    promise.then((tab) => {
+      sendResponse(tab);
+    });
+  }
+  return true;
 });
-chrome.runtime.onMessage.addListener(() => {
-  console.log('got milk?')
-});
+
+function getURLs() {
+  var urls = [];
+  for(var i = 0; i < document.links.length; i ++) {
+    urls.push(document.links[i].href);
+  }
+  return urls;
+}
+
