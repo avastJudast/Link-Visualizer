@@ -6,9 +6,9 @@
     "background": {
         "service_worker": "background.js"
     },
-    "icons": { "16": "icon16.png",
-        "48": "icon48.png",
-       "128": "icon128.png" },
+    "icons": { "16": "Tree16.png",
+        "48": "Tree48.png",
+       "128": "Tree128.png" },
     "permissions": ["storage", "activeTab", "scripting"],
     "action": {
         "default_popup": "popup.html"

@@ -1,14 +1,17 @@
 button {
-    height: 30px;
-    width: 50px;
-    color: whitesmoke;
+    height: 40px;
+    width: 80px;
+    background-color: #d3e9d2;
+    color: #636361;
+    font-family: fantasy;
     outline: none;
     margin: 10px;
     border: none;
-    border-radius: 2px;
+    border-radius: 50px;
+    box-shadow: 5px 5px 60px 10px rgb(146, 142, 137);
   }
-  
-  button.current {
-    box-shadow: 0 0 0 2px white,
-                0 0 0 4px black;
-  }
+
+  /*button.current {
+    box-shadow: 20px 20px 50px 15px bisque;
+                /*0 0 0 4px black;
+  }*/
