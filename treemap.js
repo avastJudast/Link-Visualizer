@@ -1,86 +1,53 @@
-import React from 'react';
+import {
+  select,
+  json,
+  tree,
+  hierarchy,
+  linkHorizontal,
+  zoom,
+  event
+} from 'd3';
 
-import Treemap from 'treemap';
+const svg = select('svg');
+const width = document.body.clientWidth;
+const height = document.body.clientHeight;
 
-import D3FlareData from '../datasets/d3-flare-example.json';
-import ShowcaseButton from '../showcase-components/showcase-button';
+const margin = { top: 0, right: 50, bottom: 0, left: 75};
+const innerWidth = width - margin.left - margin.right;
+const innerHeight = height - margin.top - margin.bottom;
 
-const MODE = [
-  'circlePack',
-  'partition',
-  'partition-pivot',
-  'squarify',
-  'resquarify',
-  'slice',
-  'dice',
-  'slicedice',
-  'binary'
-];
+const treeLayout = tree().size([innerHeight, innerWidth]);
 
-const STYLES = {
-  SVG: {
-    stroke: '#ddd',
-    strokeWidth: '0.25',
-    strokeOpacity: 0.5
-  },
-  DOM: {
-    border: 'thin solid #ddd'
-  }
-};
+const zoomG = svg
+    .attr('width', width)
+    .attr('height', height)
+  .append('g');
 
-export default class SimpleTreemapExample extends React.Component {
-  state = {
-    modeIndex: 0,
-    useSVG: true
-  };
+const g = zoomG.append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`);
 
-  updateModeIndex = increment => () => {
-    const newIndex = this.state.modeIndex + (increment ? 1 : -1);
-    const modeIndex =
-      newIndex < 0 ? MODE.length - 1 : newIndex >= MODE.length ? 0 : newIndex;
-    this.setState({modeIndex});
-  };
+svg.call(zoom().on('zoom', () => {
+  zoomG.attr('transform', event.transform);
+}));
 
-  render() {
-    const {modeIndex, useSVG} = this.state;
-
-    return (
-      <div className="centered-and-flexed">
-        <div className="centered-and-flexed-controls">
-          <ShowcaseButton
-            onClick={() => this.setState({useSVG: !useSVG})}
-            buttonContent={useSVG ? 'USE DOM' : 'USE SVG'}
-          />
-        </div>
-        <div className="centered-and-flexed-controls">
-          <ShowcaseButton
-            onClick={this.updateModeIndex(false)}
-            buttonContent={'PREV MODE'}
-          />
-          <div> {MODE[modeIndex]} </div>
-          <ShowcaseButton
-            onClick={this.updateModeIndex(true)}
-            buttonContent={'NEXT MODE'}
-          />
-        </div>
-        <Treemap
-          {...{
-            animation: true,
-            className: 'nested-tree-example',
-            colorType: 'literal',
-            colorRange: ['#88572C'],
-            data: D3FlareData,
-            mode: MODE[modeIndex],
-            renderMode: useSVG ? 'SVG' : 'DOM',
-            height: 300,
-            width: 350,
-            margin: 10,
-            getSize: d => d.value,
-            getColor: d => d.hex,
-            style: STYLES[useSVG ? 'SVG' : 'DOM']
-          }}
-        />
-      </div>
-    );
-  }
-}
+json('data.json')
+  .then(data => {
+    const root = hierarchy(data);
+    const links = treeLayout(root).links();
+    const linkPathGenerator = linkHorizontal()
+      .x(d => d.y)
+      .y(d => d.x);
+  
+    g.selectAll('path').data(links)
+      .enter().append('path')
+        .attr('d', linkPathGenerator);
+  
+    g.selectAll('text').data(root.descendants())
+      .enter().append('text')
+        .attr('x', d => d.y)
+        .attr('y', d => d.x)
+        .attr('dy', '0.32em')
+        .attr('text-anchor', d => d.children ? 'middle' : 'start')
+        .attr('font-size', d => 3.25 - d.depth + 'em')
+        .text(d => d.data.data.id);
+  });
