@@ -9,12 +9,12 @@ html, body{
 }
 
 body {
-    background-color: #ef6a144d;
+    background-color: #BBC2FF;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #FDF1E7;
+    color: #F2F1FF;
     margin: none;
 }
 
