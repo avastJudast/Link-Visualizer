@@ -1,13 +1,13 @@
-let movieDataUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/movie-data.json'
+let linkDataUrl = 'https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/movie-data.json'
 
-let movieData
+let linkData
 
 let canvas = d3.select('#canvas')
 let tooltip = d3.select('#tooltip')
 
 let drawTreeMap = () => {
 
-    let hierarchy = d3.hierarchy(movieData, (node) => {
+    let hierarchy = d3.hierarchy(linkData, (node) => {
         return node['children']
     }).sum((node) => {
         return node['value']
@@ -90,13 +90,13 @@ let drawTreeMap = () => {
             .attr('y', 20)
 }
 
-d3.json(movieDataUrl).then(
+d3.json(linkDataUrl).then(
     (data, error) => {
         if(error){
             console.log(error)
         } else {
-            movieData = data
-            console.log(movieData)
+            linkData = data
+            console.log(linkData)
             drawTreeMap()
         }
     }
