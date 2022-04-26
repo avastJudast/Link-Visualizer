@@ -1,0 +1,45 @@
+h1 {
+    padding-top: 15px;
+    font-family: fantasy;
+    font-weight: bolder;
+    color: rgb(86, 97, 108);
+    font-size: xx-large;
+}
+
+button {
+    height: 40px;
+    width: 80px;
+    background-color: #d3e9d2;
+    color: #636361;
+    font-family: fantasy;
+    outline: none;
+    margin: 10px;
+    border: none;
+    /* border-radius: 50px; */
+    box-shadow: 5px 5px 60px 10px rgb(146, 142, 137);
+}
+
+body {
+    height: 500px;
+    width: 300px;
+    background-color: powderblue;
+    border: 4px ridge;
+    text-align: center;
+    background-image: url('../img/main.jpg');
+    background-repeat: no-repeat;
+}
+
+p {
+    position: absolute;
+    left: 130px;
+    top: 280px;
+    font-family: fantasy;
+}
+
+button {
+    position: absolute;
+    left: 170px;
+    top: 340px;
+    cursor: pointer;
+    font-family: fantasy;
+}
